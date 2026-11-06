@@ -1,0 +1,16 @@
+# Minimal Supabase CLI config. Run `npx supabase link --project-ref <ref>` to connect to the hosted project.
+project_id = "uvu"
+
+[db]
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+# These two functions are internal: they authenticate the caller themselves
+# (Authorization: Bearer <service role key>), so the gateway JWT check is off.
+[functions.send-push]
+verify_jwt = false
+
+[functions.on-completion]
+verify_jwt = false

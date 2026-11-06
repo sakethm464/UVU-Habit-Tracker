@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/*
+ * Centralized theme tokens. Source of truth: design/design.md.
+ * Light is the :root default; dark applies via [data-theme="dark"] on <html>, set before
+ * paint by THEME_INIT_SCRIPT (lib/theme.ts) and kept in sync by ThemeProvider.
+ * Preference = system by default, manual override in Settings.
+ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces & text */
+  --bg: #fffef9;
+  --bg-tint: #fdf8ec;
+  --surface: #ffffff;
+  --surface-raised: #fbf8ef;
+  --border: #e8dfc5;
+  --border-subtle: #efe6cd;
+  --text: #1a1612;
+  --text-secondary: #6b6354;
+  --text-muted: #9c9079;
+
+  /* Gold (only accent). Light uses the deeper pair; white text on the gradient. */
+  --gold-from: #d4a94a;
+  --gold-to: #a6822c;
+  --gold-text: #8a6a1f;
+  --on-gold: #ffffff;
+  --gold-soft: rgba(212, 169, 74, 0.16);
+  --gold-border: rgba(212, 169, 74, 0.4);
+  --gold-glow: rgba(166, 130, 44, 0.25);
+  --ring-track: #efe6cd;
+  --glow: rgba(212, 169, 74, 0.16);
+  --glow-soft: rgba(166, 130, 44, 0.08);
+  --shadow-card: 0 1px 2px rgba(26, 22, 18, 0.03);
+  --shadow-elevated: 0 20px 60px -20px rgba(26, 22, 18, 0.18);
+
+  /* Habit accents (darker for contrast on light) */
+  --habit-teal: #3a8780;
+  --habit-coral: #c14f3c;
+  --habit-lilac: #6a52a3;
+  --habit-green: #4d9460;
+  --habit-amber: #a6822c;
+  --habit-pink: #b04972;
+  --habit-blue: #4a6bc0;
+
+  /* Radii */
+  --radius-control: 10px;
+  --radius-input: 12px;
+  --radius-card: 16px;
+  --radius-large: 20px;
+  --radius-modal: 24px;
+  --radius-chip: 999px;
+
+  /* Spacing scale: 4, 8, 12, 16, 20, 24, 32, 48 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0908;
+  --bg-tint: #140f08;
+  --surface: #141211;
+  --surface-raised: #1e1a14;
+  --border: #2a2520;
+  --border-subtle: #1e1a14;
+  --text: #f5f1e8;
+  --text-secondary: #8e8578;
+  --text-muted: #6b6354;
+
+  --gold-from: #f5d76e;
+  --gold-to: #d4a94a;
+  --gold-text: #f5d76e;
+  --on-gold: #0a0908;
+  --gold-soft: rgba(245, 215, 110, 0.14);
+  --gold-border: rgba(212, 169, 74, 0.3);
+  --gold-glow: rgba(212, 169, 74, 0.5);
+  --ring-track: #1e1a14;
+  --glow: rgba(245, 215, 110, 0.14);
+  --glow-soft: rgba(166, 130, 44, 0.1);
+  --shadow-card: none;
+  --shadow-elevated: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+
+  --habit-teal: #4fb0a5;
+  --habit-coral: #e87461;
+  --habit-lilac: #9e85d1;
+  --habit-green: #7bc48b;
+  --habit-amber: #e8a94a;
+  --habit-pink: #d96b8e;
+  --habit-blue: #6b8cde;
+}
+
+/* Expose tokens to Tailwind utilities (bg-surface, text-text-secondary, rounded-card, ...). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-tint: var(--bg-tint);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-gold-text: var(--gold-text);
+  --color-habit-teal: var(--habit-teal);
+  --color-habit-coral: var(--habit-coral);
+  --color-habit-lilac: var(--habit-lilac);
+  --color-habit-green: var(--habit-green);
+  --color-habit-amber: var(--habit-amber);
+  --color-habit-pink: var(--habit-pink);
+  --color-habit-blue: var(--habit-blue);
+  --radius-control: var(--radius-control);
+  --radius-input: var(--radius-input);
+  --radius-card: var(--radius-card);
+  --radius-large: var(--radius-large);
+  --radius-modal: var(--radius-modal);
+  --font-sans: var(--font-stack);
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-stack);
+  font-weight: 500; /* body 500 · UI labels 600 · headings 700 · display 800 */
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-tint) 100%) fixed;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-stack);
+  font-weight: 700;
+}
+
+/* Shared gold treatments */
+.bg-gold {
+  background: linear-gradient(135deg, var(--gold-from) 0%, var(--gold-to) 100%);
+  color: var(--on-gold);
+}
+
+.text-gold {
+  background: linear-gradient(135deg, var(--gold-from) 0%, var(--gold-to) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Page backdrop: gold glow behind onboarding/auth (per mocks) */
+.page-glow {
+  background:
+    radial-gradient(60% 60% at 50% 0%, var(--glow) 0%, transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, var(--glow-soft) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-tint) 100%);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-border);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
