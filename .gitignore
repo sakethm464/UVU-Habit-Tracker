@@ -12,3 +12,6 @@ supabase/.branches/
 coverage/
 npm-debug.log*
 .DS_Store
+
+.vercel
+.env*
