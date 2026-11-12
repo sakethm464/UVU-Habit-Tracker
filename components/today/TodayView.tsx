@@ -97,9 +97,9 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
           <div className="mb-1 text-[13px] text-[var(--text-secondary)]">{dateLabel}</div>
           <h1 className="text-[24px] font-bold tracking-[-0.6px] md:text-[30px]">{greeting}</h1>
         </div>
-        <div className="flex flex-wrap items-center gap-2 md:gap-[10px]">
+        <div className="flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-[10px]">
           <StreakBadges streaks={streaks} />
-          <ButtonLink href="/habits" className="max-md:ml-auto max-md:!px-[14px]">
+          <ButtonLink href="/habits">
             <PlusIcon /> New habit
           </ButtonLink>
         </div>
