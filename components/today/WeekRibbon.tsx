@@ -33,10 +33,10 @@ export function WeekRibbon({ today, timezone, habits, completedByDate, selected,
   return (
     <section
       aria-label="Week"
-      className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface)] px-6 py-5"
+      className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface)] px-3 py-4 md:px-6 md:py-5"
       style={{ boxShadow: "var(--shadow-card)" }}
     >
-      <div className="mb-[18px] flex items-center justify-between">
+      <div className="mb-[14px] flex items-center justify-between px-1 md:mb-[18px] md:px-0">
         <div className="flex items-baseline gap-[10px]">
           <span className="text-gold text-[20px] font-bold tracking-[-0.3px]">{MONTHS[m - 1]}</span>
           <span className="text-[14px] text-[var(--text-muted)]">{y}</span>
@@ -60,7 +60,7 @@ export function WeekRibbon({ today, timezone, habits, completedByDate, selected,
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-7 gap-1 md:gap-2">
         {days.map((d) => {
           const isToday = d === today;
           const isFuture = d > today;
@@ -76,28 +76,28 @@ export function WeekRibbon({ today, timezone, habits, completedByDate, selected,
               aria-pressed={isSelected}
               aria-current={isToday ? "date" : undefined}
               className={
-                "flex w-full cursor-pointer flex-col items-center gap-[10px] py-3 transition-colors " +
+                "flex w-full cursor-pointer flex-col items-center gap-2 py-[10px] transition-colors md:gap-[10px] md:py-3 " +
                 (isToday
-                  ? "rounded-[16px] border border-[var(--gold-border)] bg-[var(--gold-soft)]"
+                  ? "rounded-[12px] border border-[var(--gold-border)] bg-[var(--gold-soft)] md:rounded-[16px]"
                   : isSelected
-                    ? "rounded-[16px] border border-[var(--gold-border)] bg-[var(--surface-hover,transparent)]"
+                    ? "rounded-[12px] md:rounded-[16px] border border-[var(--gold-border)] bg-[var(--surface-hover,transparent)]"
                     : "rounded-[12px] border border-transparent hover:border-[var(--border)] hover:bg-[var(--surface-hover,rgba(255,255,255,0.03))]")
               }
               style={isToday ? { boxShadow: "0 6px 20px -8px var(--gold-glow)" } : undefined}
             >
               <span
-                className="text-[11px] font-semibold uppercase tracking-[0.6px]"
+                className="text-[10px] font-semibold uppercase tracking-[0.4px] md:text-[11px] md:tracking-[0.6px]"
                 style={{ color: isToday ? "var(--gold-text)" : "var(--text-muted)" }}
               >
                 {WEEKDAY_SHORT[weekdayOf(d)]}
               </span>
               <span
-                className={isToday ? "text-[20px] font-bold" : "text-[18px] font-semibold"}
+                className={isToday ? "text-[17px] font-bold md:text-[20px]" : "text-[16px] font-semibold md:text-[18px]"}
                 style={{ color: isToday ? "var(--gold-text)" : isFuture ? "var(--text-secondary)" : "var(--text)" }}
               >
                 {dayNum}
               </span>
-              <span className="flex h-1 gap-[3px]" aria-hidden="true">
+              <span className="flex h-1 max-w-full flex-wrap justify-center gap-[3px] overflow-hidden" aria-hidden="true">
                 {required.length === 0 ? (
                   <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
                 ) : (
@@ -113,7 +113,7 @@ export function WeekRibbon({ today, timezone, habits, completedByDate, selected,
             </button>
             <div
               role="tooltip"
-              className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden min-w-[160px] max-w-[220px] -translate-x-1/2 rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-left group-hover:block group-focus-within:block"
+              className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden min-w-[160px] max-w-[220px] -translate-x-1/2 rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-left md:group-hover:block md:group-focus-within:block"
               style={{ boxShadow: "var(--shadow-card)" }}
             >
               <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.6px] text-[var(--text-muted)]">

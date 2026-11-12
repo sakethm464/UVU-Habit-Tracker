@@ -30,11 +30,12 @@ export function TimezonePicker({ value, onChange }: { value: string; onChange: (
 
   useEffect(() => {
     if (!open) return;
-    const onDown = (e: MouseEvent) => {
+    const onDown = (e: PointerEvent) => {
       if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
     };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
+    // pointerdown covers mouse and touch (outside tap closes the list on phones).
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
   }, [open]);
 
   function choose(z: string) {
@@ -60,7 +61,7 @@ export function TimezonePicker({ value, onChange }: { value: string; onChange: (
   }
 
   return (
-    <div ref={rootRef} className="relative w-[280px]">
+    <div ref={rootRef} className="relative w-full md:w-[280px]">
       <input
         role="combobox"
         aria-label="Timezone"
@@ -106,7 +107,7 @@ export function TimezonePicker({ value, onChange }: { value: string; onChange: (
                 if (el && i === active) el.scrollIntoView({ block: "nearest" });
               }}
               className={
-                "cursor-pointer rounded-[8px] px-3 py-2 text-[13px] " +
+                "cursor-pointer rounded-[8px] px-3 py-3 text-[14px] md:py-2 md:text-[13px] " +
                 (i === active ? "bg-[var(--gold-soft)] " : "") +
                 (z === value ? "font-bold text-[var(--gold-text)]" : "text-[var(--text)]")
               }

@@ -24,25 +24,25 @@ export function HabitsView({ habits }: { habits: Habit[] }) {
   }
 
   return (
-    <div className="mx-auto flex max-w-[1100px] flex-col gap-7">
-      <div className="flex items-center justify-between gap-6">
+    <div className="mx-auto flex max-w-[1100px] flex-col gap-5 md:gap-7">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
         <div>
-          <h1 className="text-[30px] font-bold tracking-[-0.6px]">Manage Habits</h1>
+          <h1 className="text-[24px] font-bold tracking-[-0.6px] md:text-[30px]">Manage Habits</h1>
           <p className="mt-1 text-[14px] text-[var(--text-secondary)]">
             {habits.length === 0 ? "Nothing here yet." : `${habits.length} active habit${habits.length === 1 ? "" : "s"}`}
           </p>
         </div>
-        <Button onClick={() => setEditing({ mode: "create" })}>
+        <Button onClick={() => setEditing({ mode: "create" })} className="w-full md:w-auto">
           <PlusIcon /> Create New Habit
         </Button>
       </div>
 
       {habits.length === 0 ? (
-        <div className="relative flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-8 py-16 text-center">
-          {/* Arrow pointing up at the "Create New Habit" button in the page header. */}
+        <div className="relative flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-5 py-12 text-center md:px-8 md:py-16">
+          {/* Arrow pointing up at the "Create New Habit" button in the page header (desktop: top right). */}
           <div
             aria-hidden="true"
-            className="absolute right-[60px] top-4 flex flex-col items-center gap-1 text-[var(--gold-text)] motion-safe:animate-bounce"
+            className="absolute right-[60px] top-4 hidden flex-col items-center gap-1 text-[var(--gold-text)] motion-safe:animate-bounce md:flex"
           >
             <svg width="40" height="56" viewBox="0 0 40 56" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 54 V6" />
@@ -53,11 +53,12 @@ export function HabitsView({ habits }: { habits: Habit[] }) {
           <h2 className="text-[20px] font-bold">Create your first habit</h2>
           <p className="max-w-[360px] text-[14px] text-[var(--text-secondary)]">
             Name it, pick the days it runs on, and choose a color. It will show up on Today. Tap{" "}
-            <strong className="text-[var(--text)]">Create New Habit</strong> at the top right to begin.
+            <strong className="text-[var(--text)]">Create New Habit</strong> <span className="md:hidden">above</span>
+            <span className="hidden md:inline">at the top right</span> to begin.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
           {habits.map((h) => (
             <HabitCard key={h.id} habit={h} onEdit={() => setEditing({ mode: "edit", habit: h })} />
           ))}

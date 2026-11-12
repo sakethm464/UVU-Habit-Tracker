@@ -7,12 +7,15 @@ import { Logo } from "@/components/ui/Logo";
 import { CalendarIcon, ChartIcon, GearIcon, ListIcon } from "@/components/ui/icons";
 
 // Order is fixed by design.md: Today, Manage Habits, Timeline, Settings.
-const MAIN = [
-  { href: "/today", label: "Today", Icon: CalendarIcon },
-  { href: "/habits", label: "Manage Habits", Icon: ListIcon },
-  { href: "/timeline", label: "Timeline", Icon: ChartIcon },
+// `short` is the label used in the mobile bottom tab bar (components/layout/MobileNav.tsx).
+export const MAIN = [
+  { href: "/today", label: "Today", short: "Today", Icon: CalendarIcon },
+  { href: "/habits", label: "Manage Habits", short: "Habits", Icon: ListIcon },
+  { href: "/timeline", label: "Timeline", short: "Timeline", Icon: ChartIcon },
 ];
-const ACCOUNT = [{ href: "/settings", label: "Settings", Icon: GearIcon }];
+export const ACCOUNT = [{ href: "/settings", label: "Settings", short: "Settings", Icon: GearIcon }];
+
+export const isNavActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(href + "/");
 
 function NavLink({ href, label, Icon, active }: { href: string; label: string; Icon: typeof CalendarIcon; active: boolean }) {
   return (
@@ -36,10 +39,10 @@ const sectionLabel = "px-[14px] pb-[6px] text-[11px] font-semibold uppercase tra
 
 export function Sidebar({ name, email }: { name: string; email: string }) {
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const isActive = (href: string) => isNavActive(pathname, href);
 
   return (
-    <aside className="sticky top-0 flex h-screen w-[260px] flex-none flex-col gap-7 border-r border-[var(--border-subtle)] bg-[var(--bg)]/60 px-5 py-7">
+    <aside className="sticky top-0 hidden h-screen w-[260px] flex-none flex-col md:flex gap-7 border-r border-[var(--border-subtle)] bg-[var(--bg)]/60 px-5 py-7">
       <div className="px-[6px]">
         <Logo href="/today" size={40} />
       </div>

@@ -43,23 +43,24 @@ export function OnboardingFlow() {
   };
 
   return (
-    <div className="page-glow flex min-h-screen flex-col overflow-hidden">
-      <header className="flex items-center justify-between px-14 py-6">
+    <div className="page-glow flex min-h-dvh flex-col overflow-x-clip">
+      {/* overflow-x-clip (not hidden): hidden would make this a scroll container and break the sticky footer. */}
+      <header className="flex items-center justify-between gap-3 px-5 pb-4 pt-[calc(16px+env(safe-area-inset-top))] md:px-14 md:py-6">
         <Logo href="/welcome" />
-        <div className="flex items-center gap-6">
-          <Link href="/signup" className="text-[14px] text-[var(--text-secondary)] no-underline hover:text-[var(--text)]">
+        <div className="flex items-center gap-4 md:gap-6">
+          <Link href="/signup" className="whitespace-nowrap text-[14px] text-[var(--text-secondary)] no-underline hover:text-[var(--text)]">
             Skip →
           </Link>
           <Link
             href="/login"
-            className="rounded-[10px] border border-[var(--border)] px-4 py-2 text-[14px] font-medium text-[var(--text)] no-underline hover:border-[var(--gold-border)]"
+            className="whitespace-nowrap rounded-[10px] border border-[var(--border)] px-3 py-[6px] text-[14px] font-medium text-[var(--text)] no-underline hover:border-[var(--gold-border)] md:px-4 md:py-2"
           >
             Sign in
           </Link>
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-[1200px] flex-1 items-center px-14">
+      <main className="mx-auto flex w-full max-w-[1200px] flex-1 items-start px-5 pb-6 pt-4 md:items-center md:px-14 md:py-0">
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={i}
@@ -68,13 +69,13 @@ export function OnboardingFlow() {
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? undefined : { opacity: 0, x: -24 * dir }}
             transition={{ duration: 0.28, ease: "easeOut" }}
-            className="grid w-full grid-cols-2 items-center gap-14"
+            className="grid w-full min-w-0 grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14"
           >
-            <section>
-              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold-border)] bg-[var(--gold-soft)] px-3 py-[6px] text-[12px] font-semibold tracking-[0.3px] text-[var(--gold-text)]">
+            <section className="min-w-0">
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--gold-border)] bg-[var(--gold-soft)] px-3 py-[6px] text-[12px] font-semibold tracking-[0.3px] text-[var(--gold-text)] md:mb-6">
                 {step.eyebrow}
               </span>
-              <h1 className="mb-5 text-[52px] font-extrabold leading-[1.05] tracking-[-1.5px]">
+              <h1 className="mb-4 text-[clamp(30px,9vw,52px)] font-extrabold leading-[1.08] tracking-[-0.03em] md:mb-5 md:leading-[1.05]">
                 {step.title.map((line, k) => (
                   <span key={k} className={k === step.title.length - 1 ? "text-gold" : ""}>
                     {line}
@@ -82,24 +83,24 @@ export function OnboardingFlow() {
                   </span>
                 ))}
               </h1>
-              <p className="max-w-[460px] text-[17px] leading-[1.55] text-[var(--text-secondary)]">{step.body}</p>
+              <p className="max-w-[460px] text-[15px] leading-[1.55] text-[var(--text-secondary)] md:text-[17px]">{step.body}</p>
             </section>
-            <section aria-hidden="true" className="flex justify-center">
+            <section aria-hidden="true" className="flex min-w-0 justify-center">
               <Preview kind={step.visual} />
             </section>
           </motion.div>
         </AnimatePresence>
       </main>
 
-      <footer className="flex items-center justify-between px-14 pb-8 pt-6">
-        <div className="w-40">
+      <footer className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-[var(--border-subtle)] bg-[var(--bg)]/80 px-5 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] backdrop-blur-md md:static md:border-0 md:bg-transparent md:px-14 md:pb-8 md:pt-6 md:backdrop-blur-none">
+        <div className="min-w-0 flex-1 md:w-40 md:flex-none">
           {i > 0 && (
-            <Button variant="ghost" onClick={() => go(i - 1)}>
+            <Button variant="ghost" onClick={() => go(i - 1)} className="max-md:!px-1">
               <ChevronLeftIcon /> Back
             </Button>
           )}
         </div>
-        <div className="flex gap-2" role="tablist" aria-label="Onboarding progress">
+        <div className="flex flex-none gap-2" role="tablist" aria-label="Onboarding progress">
           {STEPS.map((_, k) => (
             <button
               key={k}
@@ -116,10 +117,11 @@ export function OnboardingFlow() {
             />
           ))}
         </div>
-        <div className="flex w-40 justify-end">
+        <div className="flex flex-1 justify-end max-md:min-w-fit md:w-40 md:flex-none">
           {last ? (
-            <ButtonLink href="/signup" size="lg">
-              Let&apos;s get started! <ArrowRightIcon />
+            <ButtonLink href="/signup" size="lg" className="whitespace-nowrap max-md:!px-4 max-md:!py-[10px] max-md:!text-[14px]">
+              <span className="md:hidden">Get started</span>
+              <span className="hidden md:inline">Let&apos;s get started!</span> <ArrowRightIcon />
             </ButtonLink>
           ) : (
             <Button onClick={() => go(i + 1)}>
@@ -172,20 +174,20 @@ const DAYS = ["S", "M", "T", "W", "T", "F", "S"];
 
 function Preview({ kind }: { kind: Visual }) {
   const card =
-    "w-[420px] rounded-[24px] border border-[var(--border-subtle)] bg-[var(--surface)] p-6 shadow-[var(--shadow-elevated)]";
+    "w-full max-w-[420px] rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface)] p-5 shadow-[var(--shadow-elevated)] md:rounded-[24px] md:p-6";
   if (kind === "make") {
     return (
       <div className={card}>
         <div className="mb-4 text-[11px] uppercase tracking-[0.4px] text-[var(--text-muted)]">New habit</div>
         <div className="mb-4 rounded-[12px] border border-[var(--border)] px-4 py-3 text-[15px]">Morning run</div>
         <div className="mb-2 text-[12px] text-[var(--text-secondary)]">Days</div>
-        <div className="mb-4 flex gap-2">
+        <div className="mb-4 flex gap-[6px] md:gap-2">
           {DAYS.map((d, k) => {
             const on = k === 1 || k === 3 || k === 5;
             return (
               <span
                 key={k}
-                className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-[12px] border text-[12px] font-bold"
+                className="inline-flex aspect-square min-w-0 max-w-[44px] flex-1 items-center justify-center rounded-[10px] border text-[12px] font-bold md:rounded-[12px]"
                 style={
                   on
                     ? {

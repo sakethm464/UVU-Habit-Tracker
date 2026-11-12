@@ -81,7 +81,7 @@ export function HabitForm({ habit, onSubmit, onArchive, onCancel }: Props) {
           </button>
         </div>
         {frequency === "specific_days" && (
-          <div className="flex gap-2" role="group" aria-label="Days of the week">
+          <div className="flex gap-[6px] md:gap-2" role="group" aria-label="Days of the week">
             {ALL_DAYS.map((d) => {
               const active = days.includes(d);
               return (
@@ -91,7 +91,7 @@ export function HabitForm({ habit, onSubmit, onArchive, onCancel }: Props) {
                   aria-pressed={active}
                   aria-label={WEEKDAY_SHORT[d]}
                   onClick={() => toggleDay(d)}
-                  className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-[12px] border text-[12px] font-bold transition-colors"
+                  className="inline-flex aspect-square min-w-0 max-w-[44px] flex-1 items-center justify-center rounded-[10px] border text-[11px] font-bold transition-colors md:rounded-[12px] md:text-[12px]"
                   style={
                     active
                       ? { background: "color-mix(in srgb, var(--hc) 18%, transparent)", borderColor: "color-mix(in srgb, var(--hc) 50%, transparent)", color: "var(--hc)", ["--hc" as string]: HABIT_COLORS.find((c) => c.hex === color)?.cssVar ?? color }
@@ -108,7 +108,7 @@ export function HabitForm({ habit, onSubmit, onArchive, onCancel }: Props) {
 
       <fieldset>
         <legend className="mb-3 text-[12px] font-medium tracking-[0.3px] text-[var(--text-secondary)]">Color</legend>
-        <div className="flex gap-3" role="radiogroup" aria-label="Color">
+        <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Color">
           {HABIT_COLORS.map((c) => {
             const selected = c.hex.toLowerCase() === color.toLowerCase();
             return (
@@ -139,11 +139,11 @@ export function HabitForm({ habit, onSubmit, onArchive, onCancel }: Props) {
         </p>
       )}
 
-      <div className="mt-1 flex items-center justify-between gap-3">
-        <div>
+      <div className="mt-1 flex flex-col-reverse gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex justify-center md:block">
           {habit && onArchive &&
             (confirmArchive ? (
-              <span className="flex items-center gap-2 text-[13px]">
+              <span className="flex flex-wrap items-center justify-center gap-2 text-[13px]">
                 <span className="text-[var(--text-secondary)]">Archive this habit?</span>
                 <Button variant="secondary" disabled={pending} onClick={() => run(onArchive)} className="!text-[var(--habit-coral)]">
                   Yes, archive
@@ -158,11 +158,11 @@ export function HabitForm({ habit, onSubmit, onArchive, onCancel }: Props) {
               </Button>
             ))}
         </div>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2 md:flex">
           <Button variant="secondary" onClick={onCancel} disabled={pending}>
             Cancel
           </Button>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} className="whitespace-nowrap">
             {pending ? "Saving…" : habit ? "Save changes" : "Create habit"}
           </Button>
         </div>

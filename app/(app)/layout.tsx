@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { MobileNav } from "@/components/layout/MobileNav";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ThemeSync } from "@/components/settings/ThemeSync";
 import { SetupNotice } from "@/components/auth/AuthShell";
@@ -28,9 +29,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const name = profile?.display_name || (user.email ?? "You").split("@")[0];
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-dvh flex-col md:flex-row">
+      <MobileNav name={name} email={user.email ?? ""} />
       <Sidebar name={name} email={user.email ?? ""} />
-      <div className="min-w-0 flex-1 px-12 pb-12 pt-8">
+      <div className="min-w-0 flex-1 px-4 pt-5 pb-[calc(96px+env(safe-area-inset-bottom))] md:px-12 md:pb-12 md:pt-8">
         <ThemeSync profileTheme={profile?.theme ?? "system"} />
         {children}
       </div>

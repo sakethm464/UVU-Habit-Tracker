@@ -22,9 +22,10 @@ export function ConsistencyRing({ pct, size = 120, stroke = 10, color, label }: 
   const value = Math.max(0, Math.min(100, pct ?? 0));
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative" style={{ width: size, height: size }}>
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label ?? "Consistency"}: ${pct === null ? "no data" : pct + "%"}`}>
+    <div className="flex min-w-0 flex-col items-center gap-2">
+      {/* Fluid: shrinks to its column on narrow screens (max = size); label scales with the ring via cqw. */}
+      <div className="relative aspect-square w-full" style={{ maxWidth: size, containerType: "inline-size" }}>
+        <svg className="h-full w-full" viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label ?? "Consistency"}: ${pct === null ? "no data" : pct + "%"}`}>
           <defs>
             <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="var(--gold-from)" />
@@ -48,12 +49,12 @@ export function ConsistencyRing({ pct, size = 120, stroke = 10, color, label }: 
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-gold font-extrabold tabular-nums" style={{ fontSize: size * 0.26 }}>
+          <span className="text-gold font-extrabold tabular-nums" style={{ fontSize: "26cqw" }}>
             {pct === null ? "–" : `${pct}%`}
           </span>
         </div>
       </div>
-      {label && <span className="text-[11px] font-semibold uppercase tracking-[0.6px] text-[var(--text-muted)]">{label}</span>}
+      {label && <span className="text-[10px] font-semibold uppercase tracking-[0.6px] text-[var(--text-muted)] md:text-[11px]">{label}</span>}
     </div>
   );
 }

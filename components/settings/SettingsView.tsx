@@ -16,12 +16,12 @@ import type { Profile } from "@/lib/types";
 
 function Section({ title, description, children }: { title: string; description?: string; children: React.ReactNode }) {
   return (
-    <section className="flex items-start justify-between gap-8 border-b border-[var(--border-subtle)] py-6 last:border-b-0">
-      <div className="max-w-[320px]">
+    <section className="flex flex-col gap-4 border-b border-[var(--border-subtle)] py-5 last:border-b-0 md:flex-row md:items-start md:justify-between md:gap-8 md:py-6">
+      <div className="md:max-w-[320px]">
         <h2 className="text-[15px] font-semibold">{title}</h2>
         {description && <p className="mt-1 text-[13px] text-[var(--text-secondary)]">{description}</p>}
       </div>
-      <div className="flex flex-col items-end gap-2">{children}</div>
+      <div className="flex min-w-0 flex-col items-start gap-2 md:items-end">{children}</div>
     </section>
   );
 }
@@ -46,7 +46,7 @@ function Switch({ checked, onChange, label, disabled }: { checked: boolean; onCh
 }
 
 function PushHelp({ kind }: { kind: "ios" | "denied" }) {
-  const box = "max-w-[340px] rounded-[12px] border border-[var(--gold-border)] bg-[var(--gold-soft)] px-4 py-3 text-left text-[12px] leading-relaxed text-[var(--text-secondary)]";
+  const box = "w-full md:max-w-[340px] rounded-[12px] border border-[var(--gold-border)] bg-[var(--gold-soft)] px-4 py-3 text-left text-[12px] leading-relaxed text-[var(--text-secondary)]";
   if (kind === "ios") {
     return (
       <div className={box} role="note">
@@ -173,16 +173,16 @@ export function SettingsView({ profile, email }: { profile: Profile; email: stri
   return (
     <div className="mx-auto flex max-w-[760px] flex-col gap-4">
       <div>
-        <h1 className="text-[30px] font-bold tracking-[-0.6px]">Settings</h1>
-        <p className="mt-1 text-[14px] text-[var(--text-secondary)]">{email}</p>
+        <h1 className="text-[24px] font-bold tracking-[-0.6px] md:text-[30px]">Settings</h1>
+        <p className="mt-1 truncate text-[14px] text-[var(--text-secondary)]">{email}</p>
       </div>
 
-      <div className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface)] px-8" style={{ boxShadow: "var(--shadow-card)" }}>
+      <div className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface)] px-5 md:px-8" style={{ boxShadow: "var(--shadow-card)" }}>
         <Section title="Notifications" description="Milestones and gentle heads-up when a streak breaks.">
           <Switch checked={pushOn && !env.denied} onChange={onTogglePush} label="Push notifications" disabled={pushBusy} />
           {env.ios && <PushHelp kind="ios" />}
           {showDeniedHelp && <PushHelp kind="denied" />}
-          {pushNote && <p className="max-w-[320px] text-right text-[12px] text-[var(--text-secondary)]">{pushNote}</p>}
+          {pushNote && <p className="max-w-[320px] text-left text-[12px] md:text-right text-[var(--text-secondary)]">{pushNote}</p>}
         </Section>
 
         <Section title="Appearance" description="Follows your system by default. Applies everywhere, including sign-in.">
@@ -238,7 +238,7 @@ export function SettingsView({ profile, email }: { profile: Profile; email: stri
             {deleteError}
           </p>
         )}
-        <div className="flex justify-end gap-2">
+        <div className="grid grid-cols-2 gap-2 md:flex md:justify-end">
           <Button variant="secondary" disabled={deleting} onClick={closeDelete}>
             Cancel
           </Button>

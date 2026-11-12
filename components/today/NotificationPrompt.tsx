@@ -80,8 +80,8 @@ export function NotificationPrompt({ userId, pushEnabled }: { userId: string; pu
   if (!mode) return null;
   const thisDevice = mode === "this-device";
   return (
-    <div role="region" aria-label="Notifications" className="flex items-center justify-between gap-6 rounded-[16px] border border-[var(--gold-border)] bg-[var(--gold-soft)] px-5 py-4">
-      <div>
+    <div role="region" aria-label="Notifications" className="flex flex-col gap-3 rounded-[16px] border border-[var(--gold-border)] bg-[var(--gold-soft)] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-6 md:px-5">
+      <div className="min-w-0">
         <div className="text-[14px] font-semibold">{thisDevice ? "Turn on notifications for this device?" : "Want a nudge when it counts?"}</div>
         <div className="text-[13px] text-[var(--text-secondary)]">
           {thisDevice
@@ -89,7 +89,7 @@ export function NotificationPrompt({ userId, pushEnabled }: { userId: string; pu
             : "We'll ping you for streak milestones and if a streak breaks. No spam."}
         </div>
       </div>
-      <div className="flex flex-none gap-2">
+      <div className="flex flex-none justify-end gap-2">
         <Button variant="ghost" onClick={dismiss} disabled={busy}>
           Not now
         </Button>

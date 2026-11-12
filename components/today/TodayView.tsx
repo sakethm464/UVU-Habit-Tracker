@@ -91,15 +91,15 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
   }
 
   return (
-    <div className="mx-auto flex max-w-[1100px] flex-col gap-7">
-      <div className="flex items-center justify-between gap-6">
-        <div>
+    <div className="mx-auto flex max-w-[1100px] flex-col gap-5 md:gap-7">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
+        <div className="min-w-0">
           <div className="mb-1 text-[13px] text-[var(--text-secondary)]">{dateLabel}</div>
-          <h1 className="text-[30px] font-bold tracking-[-0.6px]">{greeting}</h1>
+          <h1 className="text-[24px] font-bold tracking-[-0.6px] md:text-[30px]">{greeting}</h1>
         </div>
-        <div className="flex items-center gap-[10px]">
+        <div className="flex flex-wrap items-center gap-2 md:gap-[10px]">
           <StreakBadges streaks={streaks} />
-          <ButtonLink href="/habits">
+          <ButtonLink href="/habits" className="max-md:ml-auto max-md:!px-[14px]">
             <PlusIcon /> New habit
           </ButtonLink>
         </div>
@@ -110,7 +110,7 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
       <WeekRibbon today={today} timezone={timezone} habits={habits} completedByDate={completedByDate} selected={selected} onSelect={setSelected} />
 
       {habits.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-8 py-16 text-center">
+        <div className="flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-5 py-12 text-center md:px-8 md:py-16">
           <h2 className="text-[20px] font-bold">Create your first habit</h2>
           <p className="max-w-[360px] text-[14px] text-[var(--text-secondary)]">
             Habits you schedule for today show up here to scratch off.
@@ -121,9 +121,9 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between">
-            <div className="flex items-baseline gap-3">
-              <h2 className="text-[20px] font-bold tracking-[-0.3px]">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 className="text-[18px] font-bold tracking-[-0.3px] md:text-[20px]">
                 {isToday ? "Today's habits" : formatDay(selected)}
               </h2>
               {!isToday && (
@@ -132,13 +132,13 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
                 </button>
               )}
               {todays.length > 0 && !isFuture && (
-                <span className="text-[14px] text-[var(--text-secondary)]">
+                <span className="text-[13px] text-[var(--text-secondary)] md:text-[14px]">
                   {doneCount} of {todays.length} complete · {pct}%
                 </span>
               )}
             </div>
             {todays.length > 0 && !isFuture && (
-              <div className="h-[6px] w-[180px] overflow-hidden rounded-[3px] bg-[var(--ring-track)]" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Today's progress">
+              <div className="h-[6px] w-full overflow-hidden md:w-[180px] rounded-[3px] bg-[var(--ring-track)]" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Today's progress">
                 <div className="h-full bg-gold transition-[width] duration-300" style={{ width: `${pct}%` }} />
               </div>
             )}
@@ -155,7 +155,7 @@ export function TodayView({ userId, greeting, dateLabel, timezone, today, habits
               Nothing scheduled {isToday ? "today" : "this day"}. <Link href="/habits" className="font-semibold text-[var(--gold-text)]">Manage habits</Link>
             </p>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {todays.map((h) => (
                 <TodayHabitCard key={h.id} habit={h} done={doneToday.has(h.id)} readOnly={!isToday} pending={pending.has(h.id)} onToggle={() => toggle(h)} />
               ))}

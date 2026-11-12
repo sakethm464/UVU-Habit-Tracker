@@ -15,7 +15,7 @@ export function CellGrid({ cells, color, columns }: { cells: Cell[]; color: stri
         <span
           key={c.day}
           title={`${c.day} · ${LABEL[c.state]}`}
-          className="aspect-square rounded-[6px] border"
+          className="aspect-square rounded-[4px] border md:rounded-[6px]"
           style={
             c.state === "done"
               ? { background: `color-mix(in srgb, ${color} 90%, transparent)`, borderColor: "transparent" }

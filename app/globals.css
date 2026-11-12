@@ -138,6 +138,26 @@ body {
 
 body {
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-tint) 100%) fixed;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Safe-area insets (notch / home indicator) for the installed PWA (viewport-fit=cover). */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* iOS zooms into inputs under 16px on focus; keep form fields at 16px on phones. */
+@media (max-width: 767px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
 }
 
 h1,

@@ -63,7 +63,7 @@ design/         reference design (do not put app code here)
 Conflicts between docs/mocks and the calls made (see `architecture/` docs for the originals):
 
 1. **Navigation**: docs say 3 bottom tabs + a Settings modal; `design.md` lists 4 nav items including Settings. `design.md` wins: sidebar order Today, Manage Habits, Timeline, Settings; Settings is a page.
-2. **Desktop only**: no mobile layouts and no iOS Add-to-Home-Screen prompt in this MVP (per product owner).
+2. **Responsive**: desktop keeps the sidebar; under 768px (`md`) the app switches to a top bar + 4-item bottom tab bar, single-column cards and bottom-sheet modals, with safe-area insets for the installed PWA. No iOS Add-to-Home-Screen prompt in this MVP (Settings shows the install explainer when push needs it).
 3. **No OAuth** (Google/Apple buttons in the mocks are out of MVP scope). Forgot-password is kept.
 4. **Icons**: "AI generates the icon" in the mocks means a static icon set chosen by habit-name keywords (per `03-UX-AND-BUILD.md`), not runtime AI.
 5. **Mock marketing copy** (fake user stats, "private beta", "streaks that forgive one off day") is not used.

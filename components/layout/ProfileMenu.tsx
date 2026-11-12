@@ -13,7 +13,7 @@ function initials(name: string) {
 }
 
 /** Bottom-left sidebar profile card. Opens a 24px-radius modal whose only action is Log out. */
-export function ProfileMenu({ name, email }: { name: string; email: string }) {
+export function ProfileMenu({ name, email, compact = false }: { name: string; email: string; compact?: boolean }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -35,6 +35,18 @@ export function ProfileMenu({ name, email }: { name: string; email: string }) {
 
   return (
     <>
+      {compact ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="Profile"
+          aria-haspopup="dialog"
+          className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-full text-[13px] font-bold text-white"
+          style={{ background: "linear-gradient(135deg, var(--habit-coral), var(--habit-pink))" }}
+        >
+          {initials(name)}
+        </button>
+      ) : (
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -53,6 +65,7 @@ export function ProfileMenu({ name, email }: { name: string; email: string }) {
           <span className="block truncate text-[11px] text-[var(--text-muted)]">{email}</span>
         </span>
       </button>
+      )}
 
       <Modal open={open} onClose={() => !busy && setOpen(false)} title="Profile">
         <div className="mb-6 flex items-center gap-3">

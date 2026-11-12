@@ -23,10 +23,10 @@ export function TimelineView({ rows }: { rows: TimelineRow[] }) {
   const [range, setRange] = useState<Range>("week");
 
   return (
-    <div className="mx-auto flex max-w-[1100px] flex-col gap-7">
-      <div className="flex items-center justify-between gap-6">
+    <div className="mx-auto flex max-w-[1100px] flex-col gap-5 md:gap-7">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
         <div>
-          <h1 className="text-[30px] font-bold tracking-[-0.6px]">Timeline</h1>
+          <h1 className="text-[24px] font-bold tracking-[-0.6px] md:text-[30px]">Timeline</h1>
           <p className="mt-1 text-[14px] text-[var(--text-secondary)]">Every check-in, filled in over time.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -53,13 +53,13 @@ export function TimelineView({ rows }: { rows: TimelineRow[] }) {
       </div>
 
       {rows.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-8 py-16 text-center">
+        <div className="flex flex-col items-center gap-4 rounded-[20px] border border-dashed border-[var(--border)] px-5 py-12 text-center md:px-8 md:py-16">
           <h2 className="text-[20px] font-bold">Nothing to show yet</h2>
           <p className="max-w-[360px] text-[14px] text-[var(--text-secondary)]">Create a habit and check it off. Your timeline fills in from today.</p>
           <ButtonLink href="/habits">Create a habit</ButtonLink>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
           {rows.map(({ habit, cells, weekPct, monthPct }) => {
             const c = colorFor(habit.color);
             const shown = range === "week" ? cells.slice(-7) : cells;
@@ -68,7 +68,7 @@ export function TimelineView({ rows }: { rows: TimelineRow[] }) {
               <Link
                 key={habit.id}
                 href={`/timeline/${habit.id}`}
-                className="group flex flex-col gap-4 rounded-[20px] border p-5 no-underline transition-colors hover:border-[var(--gold-border)]"
+                className="group flex min-w-0 flex-col gap-4 rounded-[20px] border p-4 no-underline md:p-5 transition-colors hover:border-[var(--gold-border)]"
                 style={{
                   background: `color-mix(in srgb, ${c} 6%, var(--surface))`,
                   borderColor: `color-mix(in srgb, ${c} 22%, transparent)`,
